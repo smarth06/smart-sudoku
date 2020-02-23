@@ -21,9 +21,12 @@ class Recognizer():
         ## filters: Integer, the dimensionality of the output space (i.e. the number of output filters in the convolution).
         model.add(Conv2D(self.filters, kernel_size = self.kernel_size, input_shape = self.input_shape))
         model.add(MaxPooling2D(pool_size=self.pool_size))
+        model.add(Conv2D(16, (3,3), input_shape = self.input_shape))
+        model.add(MaxPooling2D(pool_size=self.pool_size))
         model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
-        model.add(Dense(self.number_neurons_hidden, activation=tf.nn.relu))
+        model.add(Dense(self.number_neurons_hidden, activation='relu'))
         model.add(Dropout(self.rate))
+        model.add(Dense(64, activation='relu'))
         model.add(Dense(self.number_neurons_output,activation=tf.nn.softmax))
         return model
 
